@@ -36,10 +36,10 @@ public class FoodItem implements Serializable {
     @Column(name = "Price")
     private double price;
 
-    @Column(name = "Description")
+   @Column(name = "Description", columnDefinition = "TEXT") // Thay đổi kiểu dữ liệu thành TEXT
     private String description;
 
-    @Column(name = "Ingredients")
+    @Column(name = "Ingredients", columnDefinition = "TEXT") // Thay đổi kiểu dữ liệu thành TEXT
     private String ingredients;
 
     @Column(name = "ImageURL")

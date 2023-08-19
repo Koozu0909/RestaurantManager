@@ -4,23 +4,21 @@
  */
 package com.vk.service;
 
-import com.vk.pojos.FoodItem;
+import com.vk.pojos.User;
 import java.util.List;
 
 /**
  *
  * @author Admin
  */
-public interface FoodItemService {
+public interface UserService {
 
-    List<FoodItem> getFoodItems();
+    List<User> getUsers();
 
-    List<FoodItem> getFoodItemsByCategoryId(int cateId);
+    boolean addOrUpdateUser(User c);
 
-    boolean addOrUpdateFoodItem(FoodItem f);
+    boolean deleteUser(int id);
 
-    boolean deleteFoodItem(int id);
-
-    FoodItem getFoodItemById(int id);
+    User getUserById(int id);
 
 }

@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author Admin
  */
 @RestController
-public class ApiHomeController {
+public class ApiCategoryController {
 
     @Autowired
     private CategoryService categoryService;

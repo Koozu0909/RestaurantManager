@@ -69,4 +69,12 @@ public class FoodItemRepositoryImpl implements FoodItemRepository {
         }
     }
 
+    @Override
+    public List<FoodItem> getFoodItemsByCategoryId(int cateId) {
+        Session session = this.factory.getObject().getCurrentSession();
+        Query<FoodItem> query = session.createQuery("FROM FoodItem f WHERE f.categoryId = :cateId", FoodItem.class);
+        query.setParameter("cateId", cateId);
+        return query.list();
+    }
+
 }

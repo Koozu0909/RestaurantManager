@@ -33,13 +33,4 @@ public class HomeController {
         return "index";
     }
 
-    
-    public static void main(String[] args) {
-        File directory = new File("src\\main\\resources\\images");
-        if (directory.canWrite()) {
-            System.out.println("Application can write to directory");
-        } else {
-            System.out.println("Application cannot write to directory");
-        }
-    }
 }

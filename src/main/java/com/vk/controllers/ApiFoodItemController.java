@@ -47,11 +47,12 @@ public class ApiFoodItemController {
         return new ResponseEntity<>(fooditems, HttpStatus.OK);
     }
 
+    
     @PostMapping("/api/fooditems")
     @Transactional
-    public ResponseEntity<String> addFoodItem(@Valid FoodItem fooditem, BindingResult bindingResult, @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<FoodItem> addFoodItem(@Valid FoodItem fooditem, BindingResult bindingResult, @RequestParam("file") MultipartFile file) {
         if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>("Validation Error", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         try {
             String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
@@ -59,13 +60,13 @@ public class ApiFoodItemController {
             file.transferTo(new File(filePath));
             fooditem.setImageURL("http://localhost:8080/RestaurantManager/api/fooditems/image/" + fileName);
         } catch (IOException e) {
-            return new ResponseEntity<>("Failed to save the image", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         if (foodItemService.addOrUpdateFoodItem(fooditem)) {
-            return new ResponseEntity<>("FoodItem added successfully", HttpStatus.OK);
+            return new ResponseEntity<>(fooditem, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Failed to add fooditem", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -89,6 +90,15 @@ public class ApiFoodItemController {
         headers.setContentType(MediaType.IMAGE_JPEG); // Set the correct content type
 
         return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/api/fooditems/category/{id}")
+    public ResponseEntity<List<FoodItem>> getCartByUserId(@PathVariable("id") int id) {
+        List<FoodItem> foodList = foodItemService.getFoodItemsByCategoryId(id);
+        if (foodList == null || foodList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(foodList, HttpStatus.OK);
     }
 
     @DeleteMapping("/api/fooditems/{id}")

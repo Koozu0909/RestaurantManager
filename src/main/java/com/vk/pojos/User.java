@@ -68,7 +68,7 @@ public class User implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 255)
     @Column(name = "Password")
     private String password;
 
@@ -76,6 +76,10 @@ public class User implements Serializable {
     @NotNull
     @Column(name = "Active")
     private boolean active;
+    
+    @Column(name = "ImageURL")
+    private String imageURL;
+
 
     @Basic(optional = false)
     @NotNull
@@ -112,6 +116,13 @@ public class User implements Serializable {
         this.id = id;
     }
 
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
     public String getFirstName() {
         return firstName;
     }

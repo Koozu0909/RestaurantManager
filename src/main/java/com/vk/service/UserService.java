@@ -6,19 +6,28 @@ package com.vk.service;
 
 import com.vk.pojos.User;
 import java.util.List;
+import java.util.Map;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author Admin
  */
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
     List<User> getUsers();
 
-    boolean addOrUpdateUser(User c);
+    User addUser(User c);
 
     boolean deleteUser(int id);
 
     User getUserById(int id);
+    
+     User getUserByUsername(String username);
+     
+      boolean authUser(String username, String password);
+     
 
 }

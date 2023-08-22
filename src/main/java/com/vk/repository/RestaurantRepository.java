@@ -5,23 +5,15 @@
 package com.vk.repository;
 
 import java.util.List;
-import com.vk.pojos.User;
+import com.vk.pojos.Restaurant;
 
 /**
  *
  * @author Admin
  */
-public interface UserRepository {
-
-    List<User> getUsers();
-
-    User addUser(User c);
-
-    boolean deleteUser(int id);
-
-    User getUserById(int id);
-
-    User getUserByUsername(String username);
-
-    boolean authUser(String username, String password);
+public interface RestaurantRepository {
+    List<Restaurant> getRestaurants();
+     boolean addOrUpdateRestaurant(Restaurant c);
+     boolean deleteRestaurant(int id);
+     Restaurant getRestaurantById(int id);
 }

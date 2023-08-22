@@ -56,7 +56,7 @@ public class ApiFoodItemController {
         }
         try {
             String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-            String filePath = "D:\\All Project\\Java\\RestaurantManager\\src\\main\\resources\\images\\" + fileName;
+            String filePath = "D:\\All Project\\Java\\RestaurantManager\\src\\main\\resources\\images\\fooditems\\" + fileName;
             file.transferTo(new File(filePath));
             fooditem.setImageURL("http://localhost:8080/RestaurantManager/api/fooditems/image/" + fileName);
         } catch (IOException e) {
@@ -82,7 +82,7 @@ public class ApiFoodItemController {
 
     @GetMapping("/api/fooditems/image/{imageName}")
     public ResponseEntity<byte[]> getImage(@PathVariable String imageName) throws IOException {
-        Path imagePath = Paths.get("D:/All Project/Java/RestaurantManager/src/main/resources/images/" + imageName);
+        Path imagePath = Paths.get("D:/All Project/Java/RestaurantManager/src/main/resources/images/fooditems/" + imageName);
 
         byte[] imageBytes = Files.readAllBytes(imagePath);
 

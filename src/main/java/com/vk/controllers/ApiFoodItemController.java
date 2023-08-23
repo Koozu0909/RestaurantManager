@@ -25,6 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,6 +43,7 @@ public class ApiFoodItemController {
     private FoodItemService foodItemService;
 
     @GetMapping("/api/fooditems")
+    @CrossOrigin
     public ResponseEntity<List<FoodItem>> listCategories() {
         List<FoodItem> fooditems = this.foodItemService.getFoodItems();
         return new ResponseEntity<>(fooditems, HttpStatus.OK);
@@ -50,6 +52,7 @@ public class ApiFoodItemController {
     
     @PostMapping("/api/fooditems")
     @Transactional
+    @CrossOrigin
     public ResponseEntity<FoodItem> addFoodItem(@Valid FoodItem fooditem, BindingResult bindingResult, @RequestParam("file") MultipartFile file) {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -71,6 +74,7 @@ public class ApiFoodItemController {
     }
 
     @GetMapping("/api/fooditems/{id}")
+    @CrossOrigin
     public ResponseEntity<FoodItem> getFoodItem(@PathVariable("id") Integer id) {
         FoodItem foodItem = foodItemService.getFoodItemById(id);
         if (foodItem != null) {
@@ -93,6 +97,7 @@ public class ApiFoodItemController {
     }
 
     @GetMapping("/api/fooditems/category/{id}")
+    @CrossOrigin
     public ResponseEntity<List<FoodItem>> getCartByUserId(@PathVariable("id") int id) {
         List<FoodItem> foodList = foodItemService.getFoodItemsByCategoryId(id);
         if (foodList == null || foodList.isEmpty()) {
@@ -102,6 +107,7 @@ public class ApiFoodItemController {
     }
 
     @DeleteMapping("/api/fooditems/{id}")
+    @CrossOrigin
     public ResponseEntity<String> deleteFoodItem(@PathVariable("id") int id) {
         boolean deleted = foodItemService.deleteFoodItem(id);
         if (deleted) {

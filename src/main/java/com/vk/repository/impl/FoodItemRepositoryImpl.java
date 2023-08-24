@@ -76,5 +76,14 @@ public class FoodItemRepositoryImpl implements FoodItemRepository {
         query.setParameter("cateId", cateId);
         return query.list();
     }
+    
+     @Override
+    public List<FoodItem> getFoodItemsByTypeAndLocation(String foodType, String locationFood) {
+        Session session = factory.getObject().getCurrentSession();
+        Query<FoodItem> query = session.createQuery("FROM FoodItem f WHERE f.foodType = :foodType AND f.locationFood = :locationFood", FoodItem.class);
+        query.setParameter("foodType", foodType);
+        query.setParameter("locationFood", locationFood);
+        return query.getResultList();
+    }
 
 }

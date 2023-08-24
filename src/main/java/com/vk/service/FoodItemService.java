@@ -22,5 +22,7 @@ public interface FoodItemService {
     boolean deleteFoodItem(int id);
 
     FoodItem getFoodItemById(int id);
+    
+    List<FoodItem> getFoodItemsByTypeAndLocation(String foodType, String locationFood);
 
 }

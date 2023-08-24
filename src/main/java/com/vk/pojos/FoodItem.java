@@ -59,7 +59,13 @@ public class FoodItem implements Serializable {
 
     @Column(name = "Fat")
     private double fat;
+    
+     @Column(name = "LocationFood")
+    private String locationFood;
 
+     @Column(name = "FoodType")
+    private String foodType;
+     
     @Column(name = "CategoryId")
     private Integer categoryId;
 
@@ -109,7 +115,21 @@ public class FoodItem implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+    public String getLocationFood() {
+        return locationFood;
+    }
 
+    public void setLocationFood(String locationFood) {
+        this.locationFood = locationFood;
+    }
+
+    public String getFoodType() {
+        return foodType;
+    }
+
+    public void setFoodType(String foodType) {
+        this.foodType = foodType;
+    }
     public void setPrice(double price) {
         this.price = price;
     }

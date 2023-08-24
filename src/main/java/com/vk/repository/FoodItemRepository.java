@@ -13,8 +13,9 @@ import com.vk.pojos.FoodItem;
  */
 public interface FoodItemRepository {
     List<FoodItem> getFoodItems();
-       List<FoodItem> getFoodItemsByCategoryId(int cateId);
+     List<FoodItem> getFoodItemsByCategoryId(int cateId);
      boolean addOrUpdateFoodItem(FoodItem f);
      boolean deleteFoodItem(int id);
      FoodItem getFoodItemById(int id);
+     List<FoodItem> getFoodItemsByTypeAndLocation(String foodType, String locationFood);
 }

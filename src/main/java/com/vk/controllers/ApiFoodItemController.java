@@ -116,4 +116,14 @@ public class ApiFoodItemController {
             return new ResponseEntity<>("Failed to delete category", HttpStatus.NOT_FOUND);
         }
     }
+    
+    @GetMapping("/api/fooditems/{foodType}/{locationFood}")
+    @CrossOrigin
+    public ResponseEntity<List<FoodItem>> getFoodItemsByTypeAndLocation(
+        @PathVariable String foodType,
+        @PathVariable String locationFood) {
+        
+        List<FoodItem> foodItems = foodItemService.getFoodItemsByTypeAndLocation(foodType, locationFood);
+        return new ResponseEntity<>(foodItems, HttpStatus.OK);
+    }
 }

@@ -28,6 +28,8 @@ public interface UserService extends UserDetailsService {
      User getUserByUsername(String username);
      
       boolean authUser(String username, String password);
+      
+      boolean existsByUsername(String username);
      
 
 }

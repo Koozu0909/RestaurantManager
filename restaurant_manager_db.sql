@@ -253,12 +253,12 @@ DROP TABLE IF EXISTS `user`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
   `Id` int NOT NULL AUTO_INCREMENT,
-  `Firstname` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `Lastname` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `Email` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `Phone` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Firstname` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `Lastname` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `Email` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `Phone` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `Username` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `Password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `Password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `Active` tinyint(1) NOT NULL,
   `Userrole` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `ImageURL` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,

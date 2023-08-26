@@ -11,7 +11,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
+import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "user")
@@ -28,6 +30,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "User.findByUserRole", query = "SELECT u FROM User u WHERE u.userRole = :userRole")
 })
 public class User implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -37,26 +40,26 @@ public class User implements Serializable {
     private Integer id;
 
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 45)
+    @Null
     @Column(name = "Firstname")
     private String firstName;
 
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 45)
+    @Null
     @Column(name = "Lastname")
     private String lastName;
 
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 45)
+    @Null
     @Column(name = "Email")
     private String email;
 
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 45)
+    @Null
     @Column(name = "Phone")
     private String phone;
 
@@ -73,16 +76,13 @@ public class User implements Serializable {
     private String password;
 
     @Basic(optional = false)
-    @NotNull
     @Column(name = "Active")
     private boolean active;
-    
+
     @Column(name = "ImageURL")
     private String imageURL;
 
-
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "Userrole")
     private String userRole;
@@ -107,7 +107,6 @@ public class User implements Serializable {
     }
 
     // Getters and Setters
-
     public Integer getId() {
         return id;
     }
@@ -123,6 +122,7 @@ public class User implements Serializable {
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
+
     public String getFirstName() {
         return firstName;
     }

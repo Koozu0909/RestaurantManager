@@ -78,4 +78,14 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
+    @Override
+    public boolean existsByUsername(String username) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query<Long> q = s.createQuery("SELECT COUNT(*) FROM User WHERE username = :un", Long.class);
+        q.setParameter("un", username);
+
+        Long count = q.uniqueResult();
+        return count > 0;
+    }
+
 }

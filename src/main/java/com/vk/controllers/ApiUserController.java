@@ -5,7 +5,6 @@
 package com.vk.controllers;
 
 import com.vk.components.JwtService;
-import com.vk.pojos.FoodItem;
 import com.vk.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +16,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import javax.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -68,8 +68,8 @@ public class ApiUserController {
     @PostMapping(path = "/user/",
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    @CrossOrigin
-    public ResponseEntity<User> addUser(@Valid User user, BindingResult bindingResult, @RequestParam("file") MultipartFile file) {
+    @CrossOrigin(origins = {"http://localhost:3000/"})
+    public ResponseEntity<User> updateUser(@Valid User user, BindingResult bindingResult, @RequestParam("file") MultipartFile file) {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
         }
@@ -83,6 +83,30 @@ public class ApiUserController {
         }
         userService.addUser(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
+    }
+
+    @PostMapping(path = "/register")
+    @CrossOrigin(origins = {"http://localhost:3000/"})
+    public ResponseEntity<String> addUser(@RequestBody Map<String, String> request) {
+        String username = request.get("username");
+        String password = request.get("password");
+        if (userService.existsByUsername(username)) {
+            return new ResponseEntity<>("Username already exists", HttpStatus.BAD_REQUEST);
+        }
+        User user = new User();
+        user.setEmail(" ");
+        user.setFirstName(" ");
+        user.setLastName(" ");
+        user.setPhone(" ");
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setActive(true);
+        user.setUserRole("ROLE_USER");
+        user.setImageURL("http://localhost:8080/RestaurantManager/api/user/image/71dd10fe-ec0a-4b43-bbc8-a68fb0f8e1ff_user white.png");
+
+        userService.addUser(user);
+
+        return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
     }
 
     @GetMapping("/user/{id}")
@@ -112,4 +136,14 @@ public class ApiUserController {
             return new ResponseEntity<>("Failed to delete user", HttpStatus.NOT_FOUND);
         }
     }
+
+    @PostMapping(path = "/current-user", produces = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin(origins = {"http://localhost:3000/"})
+    public ResponseEntity<User> details(@RequestBody Map<String, String> requestBody) {
+        String token = requestBody.get("token");
+        String username = jwtService.getUsernameFromToken(token);
+        User u = this.userService.getUserByUsername(username);
+        return new ResponseEntity<>(u, HttpStatus.OK);
+    }
+
 }

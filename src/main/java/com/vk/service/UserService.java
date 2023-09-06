@@ -30,6 +30,8 @@ public interface UserService extends UserDetailsService {
       boolean authUser(String username, String password);
       
       boolean existsByUsername(String username);
+      
+      User updateUserWithNewTransaction(User user);
      
 
 }

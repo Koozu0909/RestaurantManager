@@ -18,4 +18,5 @@ public interface FoodItemRepository {
      boolean deleteFoodItem(int id);
      FoodItem getFoodItemById(int id);
      List<FoodItem> getFoodItemsByTypeAndLocation(String foodType, String locationFood);
+     List<FoodItem> getFoodItemsByRestaurantId(int restaurantId);
 }

@@ -70,6 +70,21 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
             return false;
         }
     }
+    
+    @Override
+public Restaurant getRestaurantByUserId(int userId) {
+    Session s = this.factory.getObject().getCurrentSession();
+    Query<Restaurant> q = s.createQuery("FROM Restaurant r WHERE r.userId = :userId", Restaurant.class);
+    q.setParameter("userId", userId);
+
+    try {
+        return q.getSingleResult(); // This will return the restaurant associated with the user's ID
+    } catch (HibernateException ex) {
+        ex.printStackTrace();
+        return null;
+    }
+}
+
 
     
 

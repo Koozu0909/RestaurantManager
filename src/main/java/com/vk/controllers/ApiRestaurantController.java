@@ -23,6 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,6 +42,7 @@ public class ApiRestaurantController {
     private RestaurantService restaurantService;
 
     @GetMapping("/api/restaurant")
+    @CrossOrigin
     public ResponseEntity<List<Restaurant>> listRestaurant() {
         List<Restaurant> restaurant = this.restaurantService.getRestaurants();
         return new ResponseEntity<>(restaurant, HttpStatus.OK);
@@ -48,6 +50,7 @@ public class ApiRestaurantController {
 
     @PostMapping("/api/restaurant")
     @Transactional
+    @CrossOrigin
     public ResponseEntity<String> addRestaurant(@Valid Restaurant restaurant, BindingResult bindingResult, @RequestParam("file") MultipartFile file) {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -68,6 +71,7 @@ public class ApiRestaurantController {
     }
 
     @GetMapping("/api/restaurant/{id}")
+    @CrossOrigin
     public ResponseEntity<Restaurant> getRestaurantById(@PathVariable("id") int id) {
         Restaurant restaurant = restaurantService.getRestaurantById(id);
         if (restaurant == null) {
@@ -77,6 +81,7 @@ public class ApiRestaurantController {
     }
     
     @GetMapping("/api/restaurant/image/{imageName}")
+    @CrossOrigin
     public ResponseEntity<byte[]> getImage(@PathVariable String imageName) throws IOException {
         Path imagePath = Paths.get("D:/All Project/Java/RestaurantManager/src/main/resources/images/restaurant/" + imageName);
         byte[] imageBytes = Files.readAllBytes(imagePath);
@@ -86,6 +91,7 @@ public class ApiRestaurantController {
     }
 
     @DeleteMapping("/api/restaurant/{id}")
+    @CrossOrigin
     public ResponseEntity<String> deleteRestaurant(@PathVariable("id") int id) {
         boolean deleted = restaurantService.deleteRestaurant(id);
         if (deleted) {
@@ -94,4 +100,15 @@ public class ApiRestaurantController {
             return new ResponseEntity<>("Failed to delete restaurant", HttpStatus.NOT_FOUND);
         }
     }
+    
+    @GetMapping("/api/restaurant/user/{userId}")
+    @CrossOrigin
+public ResponseEntity<Restaurant> getRestaurantByUserId(@PathVariable("userId") int userId) {
+    Restaurant restaurant = restaurantService.getRestaurantByUserId(userId);
+    if (restaurant == null) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    return new ResponseEntity<>(restaurant, HttpStatus.OK);
+}
+
 }

@@ -24,5 +24,7 @@ public interface FoodItemService {
     FoodItem getFoodItemById(int id);
     
     List<FoodItem> getFoodItemsByTypeAndLocation(String foodType, String locationFood);
+    
+    List<FoodItem> getFoodItemsByRestaurantId(int restaurantId);
 
 }

@@ -65,25 +65,38 @@ public class ApiUserController {
         return new ResponseEntity<>("error", HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping(path = "/user/",
+    @PostMapping(path = "/update-info-user",
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    @CrossOrigin(origins = {"http://localhost:3000/"})
-    public ResponseEntity<User> updateUser(@Valid User user, BindingResult bindingResult, @RequestParam("file") MultipartFile file) {
-        if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
-        }
+@CrossOrigin(origins = {"http://localhost:3000"})
+public ResponseEntity<?> updateUser(@Valid User user, BindingResult bindingResult, @RequestParam(value = "file", required = false) MultipartFile file) {
+    if (bindingResult.hasErrors()) {
+        return new ResponseEntity<>("Invalid user data.", HttpStatus.BAD_REQUEST);
+    }
+
+    if (file != null && !file.isEmpty()) {
         try {
             String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
             String filePath = "D:\\All Project\\Java\\RestaurantManager\\src\\main\\resources\\images\\user\\" + fileName;
             file.transferTo(new File(filePath));
             user.setImageURL("http://localhost:8080/RestaurantManager/api/user/image/" + fileName);
         } catch (IOException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Failed to store the image.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        userService.addUser(user);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
+
+    try {
+        User updatedUser = userService.updateUserWithNewTransaction(user);
+        if (updatedUser == null) {
+            return new ResponseEntity<>("User not found.", HttpStatus.NOT_FOUND);
+        }
+    } catch (Exception e) {
+        return new ResponseEntity<>("Failed to update user: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    return new ResponseEntity<>(user, HttpStatus.OK);
+}
+
 
     @PostMapping(path = "/register")
     @CrossOrigin(origins = {"http://localhost:3000/"})

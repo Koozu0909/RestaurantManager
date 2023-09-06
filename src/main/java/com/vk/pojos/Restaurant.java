@@ -6,6 +6,7 @@ package com.vk.pojos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.sql.Time;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -53,6 +54,26 @@ public class Restaurant implements Serializable {
 
     @Column(name = "ImageURL")
     private String imageURL;
+    
+    @Column(name = "UserId")
+    private Integer userId;
+    
+     @Column(name = "District")
+    private String district;
+     
+          @Column(name = "CityProvince")
+    private String cityProvince;
+          
+              @Column(name = "OpenTime")
+    private Time openTime;
+
+    @Column(name = "CloseTime")
+    private Time closeTime;
+    
+    @Column(name = "Active")
+    private boolean active;
+
+
 
     @Column(name = "MapLocation")
     private String mapLocation;
@@ -69,7 +90,54 @@ public class Restaurant implements Serializable {
         this.file = file;
     }
     
+    public Integer getUserId() {
+        return userId;
+    }
 
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getCityProvince() {
+        return cityProvince;
+    }
+
+    public void setCityProvince(String cityProvince) {
+        this.cityProvince = cityProvince;
+    }
+
+    public Time getOpenTime() {
+        return openTime;
+    }
+
+    public void setOpenTime(Time openTime) {
+        this.openTime = openTime;
+    }
+
+    public Time getCloseTime() {
+        return closeTime;
+    }
+
+    public void setCloseTime(Time closeTime) {
+        this.closeTime = closeTime;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
     public Restaurant() {
     }
 

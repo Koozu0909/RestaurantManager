@@ -21,6 +21,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -53,10 +55,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User addUser(User c) {
-        c.setPassword(this.passwordEncoder.encode(c.getPassword()));
+//        c.setPassword(this.passwordEncoder.encode(c.getPassword()));
         this.userRepository.addUser(c);
         return c;
     }
+    
+    
 
     @Override
     public boolean authUser(String username, String password) {
@@ -84,4 +88,9 @@ public class UserServiceImpl implements UserService {
            return userRepository.existsByUsername(username);
     }
 
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public User updateUserWithNewTransaction(User user) {
+         return userRepository.updateUser(user);
+    }
 }

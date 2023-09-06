@@ -42,11 +42,13 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         resolver.setSuffix(".jsp");
         return resolver;
     }
-
+   
     @Bean
     public CommonsMultipartResolver multipartResolver() {
-        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-        resolver.setMaxUploadSize(-1); // Set maximum file size (-1 for unlimited)
+        CommonsMultipartResolver resolver
+                = new CommonsMultipartResolver();
+
+        resolver.setDefaultEncoding("UTF-8");
         return resolver;
     }
     

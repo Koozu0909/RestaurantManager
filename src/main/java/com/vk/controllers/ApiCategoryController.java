@@ -14,6 +14,7 @@ import java.util.List;
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,12 +31,14 @@ public class ApiCategoryController {
     private CategoryService categoryService;
 
     @GetMapping("/api/categories")
+    @CrossOrigin
     public ResponseEntity<List<Category>> listCategories() {
         List<Category> categories = this.categoryService.getCategories();
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
     @PostMapping("/api/categories")
+    @CrossOrigin
     public ResponseEntity<String> addCategory(@Valid @RequestBody Category category, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>("Validation Error", HttpStatus.BAD_REQUEST);
@@ -49,6 +52,7 @@ public class ApiCategoryController {
     }
 
     @GetMapping("/api/categories/{id}")
+    @CrossOrigin
     public ResponseEntity<Category> getCategoryById(@PathVariable("id") int id) {
         Category category = categoryService.getCategoryById(id);
         if (category == null) {
@@ -58,6 +62,7 @@ public class ApiCategoryController {
     }
 
     @DeleteMapping("/api/categories/{id}")
+    @CrossOrigin
     public ResponseEntity<String> deleteCategory(@PathVariable("id") int id) {
         boolean deleted = categoryService.deleteCategory(id);
         if (deleted) {

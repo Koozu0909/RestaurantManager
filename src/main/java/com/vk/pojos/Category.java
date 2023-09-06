@@ -35,6 +35,30 @@ public class Category implements Serializable {
     private String name;
 
     
+    @Column(name = "ParentCateId")
+    private Integer parentCateId;
+
+    
+    @Column(name = "Description", columnDefinition = "TEXT")
+    private String description;
+
+    public Integer getParentCateId() {
+        return parentCateId;
+    }
+
+    public void setParentCateId(Integer parentCateId) {
+        this.parentCateId = parentCateId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    
       public Category(Integer id) {
         this.id = id;
     }

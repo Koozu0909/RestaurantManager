@@ -35,29 +35,24 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "Id")
     private Integer id;
 
-    @Basic(optional = false)
     @Size(min = 1, max = 45)
     @Null
     @Column(name = "Firstname")
     private String firstName;
 
-    @Basic(optional = false)
     @Size(min = 1, max = 45)
     @Null
     @Column(name = "Lastname")
     private String lastName;
 
-    @Basic(optional = false)
     @Size(min = 1, max = 45)
     @Null
     @Column(name = "Email")
     private String email;
 
-    @Basic(optional = false)
     @Size(min = 1, max = 45)
     @Null
     @Column(name = "Phone")
@@ -69,20 +64,18 @@ public class User implements Serializable {
     @Column(name = "Username")
     private String username;
 
-    @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "Password")
     private String password;
 
-    @Basic(optional = false)
+    @Basic(optional = true)
     @Column(name = "Active")
     private boolean active;
 
     @Column(name = "ImageURL")
     private String imageURL;
 
-    @Basic(optional = false)
     @Size(min = 1, max = 45)
     @Column(name = "Userrole")
     private String userRole;

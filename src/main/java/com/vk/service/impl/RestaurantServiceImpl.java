@@ -41,4 +41,11 @@ public class RestaurantServiceImpl implements RestaurantService {
         return this.categoryRepository.getRestaurantById(id);
 
     }
+
+    @Override
+    public Restaurant getRestaurantByUserId(int userId) {
+                return this.categoryRepository.getRestaurantByUserId(userId);
+
+    }
+
 }

@@ -51,4 +51,9 @@ public class FoodItemServiceImpl implements FoodItemService {
     public List<FoodItem> getFoodItemsByTypeAndLocation(String foodType, String locationFood) {
         return this.categoryRepository.getFoodItemsByTypeAndLocation(foodType, locationFood);
     }
+
+    @Override
+    public List<FoodItem> getFoodItemsByRestaurantId(int restaurantId) {
+                return this.categoryRepository.getFoodItemsByRestaurantId(restaurantId);
+    }
 }

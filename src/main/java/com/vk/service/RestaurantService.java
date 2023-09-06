@@ -20,5 +20,5 @@ public interface RestaurantService {
     boolean deleteRestaurant(int id);
 
     Restaurant getRestaurantById(int id);
-
+   Restaurant getRestaurantByUserId(int userId);
 }

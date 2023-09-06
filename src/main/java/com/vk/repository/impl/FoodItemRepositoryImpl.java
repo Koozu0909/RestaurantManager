@@ -6,7 +6,9 @@ package com.vk.repository.impl;
 
 import com.vk.pojos.FoodItem;
 import com.vk.repository.FoodItemRepository;
+import java.io.File;
 import java.util.List;
+import javax.persistence.EntityNotFoundException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -40,7 +42,21 @@ public class FoodItemRepositoryImpl implements FoodItemRepository {
             if (foodItem.getId() == null) {
                 session.save(foodItem);
             } else {
-                session.update(foodItem);
+                FoodItem existingFoodItem = session.get(FoodItem.class, foodItem.getId());
+
+                if (existingFoodItem != null) {
+                    existingFoodItem.setName(foodItem.getName());
+                    existingFoodItem.setDescription(foodItem.getDescription());
+                    existingFoodItem.setPrice(foodItem.getPrice());
+                    existingFoodItem.setPreparationTime(foodItem.getPreparationTime());
+                    existingFoodItem.setFoodType(foodItem.getFoodType());
+                    existingFoodItem.setCategoryId(foodItem.getCategoryId());
+                    existingFoodItem.setImageURL(foodItem.getImageURL());
+                    existingFoodItem.setActive(foodItem.isActive());
+                    session.update(existingFoodItem);
+                } else {
+                    throw new EntityNotFoundException("FoodItem with ID " + foodItem.getId() + " not found");
+                }
             }
             return true;
         } catch (HibernateException ex) {
@@ -76,13 +92,21 @@ public class FoodItemRepositoryImpl implements FoodItemRepository {
         query.setParameter("cateId", cateId);
         return query.list();
     }
-    
-     @Override
+
+    @Override
     public List<FoodItem> getFoodItemsByTypeAndLocation(String foodType, String locationFood) {
         Session session = factory.getObject().getCurrentSession();
         Query<FoodItem> query = session.createQuery("FROM FoodItem f WHERE f.foodType = :foodType AND f.locationFood = :locationFood", FoodItem.class);
         query.setParameter("foodType", foodType);
         query.setParameter("locationFood", locationFood);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<FoodItem> getFoodItemsByRestaurantId(int restaurantId) {
+        Session session = factory.getObject().getCurrentSession();
+        Query<FoodItem> query = session.createQuery("FROM FoodItem f WHERE f.restaurantId = :restaurantId", FoodItem.class);
+        query.setParameter("restaurantId", restaurantId);
         return query.getResultList();
     }
 

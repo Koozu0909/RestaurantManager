@@ -49,29 +49,45 @@ public class ApiFoodItemController {
         return new ResponseEntity<>(fooditems, HttpStatus.OK);
     }
 
-    
     @PostMapping("/api/fooditems")
-    @Transactional
-    @CrossOrigin
-    public ResponseEntity<FoodItem> addFoodItem(@Valid FoodItem fooditem, BindingResult bindingResult, @RequestParam("file") MultipartFile file) {
-        if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+@CrossOrigin
+public ResponseEntity<FoodItem> addOrUpdateFoodItem(@Valid FoodItem fooditem, BindingResult bindingResult, @RequestParam(value = "file", required = false) MultipartFile file) {
+    if (bindingResult.hasErrors()) {
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    // Check if the file is not null
+    if (file != null && !file.isEmpty()) {
         try {
+            // Generate a unique filename
             String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
             String filePath = "D:\\All Project\\Java\\RestaurantManager\\src\\main\\resources\\images\\fooditems\\" + fileName;
+
+            // If the fooditem already has an image URL, delete the old image
+            if (fooditem.getImageURL() != null) {
+                String oldFileName = fooditem.getImageURL().substring(fooditem.getImageURL().lastIndexOf("/") + 1);
+                String oldFilePath = "D:\\All Project\\Java\\RestaurantManager\\src\\main\\resources\\images\\fooditems\\" + oldFileName;
+                File oldFile = new File(oldFilePath);
+                if (oldFile.exists()) {
+                    oldFile.delete();
+                }
+            }
+
+            // Save the new image file
             file.transferTo(new File(filePath));
             fooditem.setImageURL("http://localhost:8080/RestaurantManager/api/fooditems/image/" + fileName);
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        if (foodItemService.addOrUpdateFoodItem(fooditem)) {
-            return new ResponseEntity<>(fooditem, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
+
+    if (foodItemService.addOrUpdateFoodItem(fooditem)) {
+        return new ResponseEntity<>(fooditem, HttpStatus.OK);
+    } else {
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+
 
     @GetMapping("/api/fooditems/{id}")
     @CrossOrigin
@@ -109,6 +125,15 @@ public class ApiFoodItemController {
     @DeleteMapping("/api/fooditems/{id}")
     @CrossOrigin
     public ResponseEntity<String> deleteFoodItem(@PathVariable("id") int id) {
+        FoodItem food =  foodItemService.getFoodItemById(id);
+         if (food.getImageURL() != null) {
+                String oldFileName = food.getImageURL().substring(food.getImageURL().lastIndexOf("/") + 1);
+                String oldFilePath = "D:\\All Project\\Java\\RestaurantManager\\src\\main\\resources\\images\\fooditems\\" + oldFileName;
+                File oldFile = new File(oldFilePath);
+                if (oldFile.exists()) {
+                    oldFile.delete();
+                }
+           }
         boolean deleted = foodItemService.deleteFoodItem(id);
         if (deleted) {
             return new ResponseEntity<>("FoodItem deleted successfully", HttpStatus.OK);
@@ -116,14 +141,25 @@ public class ApiFoodItemController {
             return new ResponseEntity<>("Failed to delete category", HttpStatus.NOT_FOUND);
         }
     }
-    
+
     @GetMapping("/api/fooditems/{foodType}/{locationFood}")
     @CrossOrigin
     public ResponseEntity<List<FoodItem>> getFoodItemsByTypeAndLocation(
-        @PathVariable String foodType,
-        @PathVariable String locationFood) {
-        
+            @PathVariable String foodType,
+            @PathVariable String locationFood) {
+
         List<FoodItem> foodItems = foodItemService.getFoodItemsByTypeAndLocation(foodType, locationFood);
         return new ResponseEntity<>(foodItems, HttpStatus.OK);
     }
+
+    @GetMapping("/api/fooditems/restaurant/{restaurantId}")
+    @CrossOrigin
+    public ResponseEntity<List<FoodItem>> getFoodItemsByRestaurantId(@PathVariable("restaurantId") int restaurantId) {
+        List<FoodItem> foodItems = foodItemService.getFoodItemsByRestaurantId(restaurantId);
+        if (foodItems == null || foodItems.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(foodItems, HttpStatus.OK);
+    }
+
 }

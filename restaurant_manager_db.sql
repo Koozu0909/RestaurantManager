@@ -74,6 +74,40 @@ INSERT INTO `category` VALUES (2,'Food',NULL,NULL),(3,'Drink',NULL,NULL),(4,'Foo
 UNLOCK TABLES;
 
 --
+-- Table structure for table `comment`
+--
+
+DROP TABLE IF EXISTS `comment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `comment` (
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `Comment` text COLLATE utf8mb4_unicode_ci,
+  `Rate` double DEFAULT NULL,
+  `CommentDate` datetime DEFAULT NULL,
+  `UserImageURL` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `FoodItemId` int DEFAULT NULL,
+  `UserId` int DEFAULT NULL,
+  `UserComment` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `FoodItemId` (`FoodItemId`),
+  KEY `UserId` (`UserId`),
+  CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`FoodItemId`) REFERENCES `fooditem` (`Id`),
+  CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`UserId`) REFERENCES `user` (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `comment`
+--
+
+LOCK TABLES `comment` WRITE;
+/*!40000 ALTER TABLE `comment` DISABLE KEYS */;
+INSERT INTO `comment` VALUES (6,'dd9sssddsss',3,'2023-09-07 00:00:00','http://localhost:8080/RestaurantManager/api/user/image/71dd10fe-ec0a-4b43-bbc8-a68fb0f8e1ff_user white.png',39,8,'user2'),(7,'dddddddddddd',4,'2023-09-07 00:00:00','http://localhost:8080/RestaurantManager/api/user/image/71dd10fe-ec0a-4b43-bbc8-a68fb0f8e1ff_user white.png',39,7,'kietuser'),(8,'dddddd',5,'2023-09-07 00:00:00','http://localhost:8080/RestaurantManager/api/user/image/71dd10fe-ec0a-4b43-bbc8-a68fb0f8e1ff_user white.png',40,8,'user2'),(9,'dsssssss',4,'2023-09-07 00:00:00','http://localhost:8080/RestaurantManager/api/user/image/71dd10fe-ec0a-4b43-bbc8-a68fb0f8e1ff_user white.png',38,8,'user2');
+/*!40000 ALTER TABLE `comment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `fooditem`
 --
 
@@ -111,7 +145,7 @@ CREATE TABLE `fooditem` (
 
 LOCK TABLES `fooditem` WRITE;
 /*!40000 ALTER TABLE `fooditem` DISABLE KEYS */;
-INSERT INTO `fooditem` VALUES (34,'Bún Thái Cay',14500,'Delicious cheeseburger with juicy beef patty','http://localhost:8080/RestaurantManager/api/fooditems/image/056b3b35-8035-40e1-8180-8f18ea4614fb_bunthai.jpeg',10,4,1,'ha-noi','drink',NULL,NULL,NULL,1,NULL,NULL),(36,'Cơm Gà',19000,'Delicious cheeseburger with juicy beef patty','http://localhost:8080/RestaurantManager/api/fooditems/image/6a615883-25a0-4e58-b938-85251336d149_comga.jpeg',10,3,1,'ha-noi','drink',NULL,NULL,NULL,1,NULL,NULL),(37,'Pizza',12300,'Delicious cheeseburger with juicy beef patty','http://localhost:8080/RestaurantManager/api/fooditems/image/c5e23c85-9455-4250-a4d4-21eed36dfe21_piza.jpeg',10,2,1,'ha-noi','drink',NULL,NULL,NULL,1,NULL,NULL),(38,'Cơm Chiên & Nui Xào',17300,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','http://localhost:8080/RestaurantManager/api/fooditems/image/d1d32ba2-f938-453f-9c2b-597ac0cc42ea_conchien.jpeg',10,2,1,'ho-chi-minh','food','58/11 Nguyễn Văn Săng, P. Tân Sơn Nhì, Tân Phú, TP. HCM',NULL,NULL,1,NULL,'Quân 5'),(39,'Cơm Tấm',12000,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ultricies integer quis auctor elit sed vulputate mi.','http://localhost:8080/RestaurantManager/api/fooditems/image/c9c05228-be9c-46d0-b631-d714fe8934b3_comtam.jpg',10,2,1,'ho-chi-minh','food','58/11 Nguyễn Văn Săng, P. Tân Sơn Nhì, Tân Phú, TP. HCM',NULL,NULL,1,NULL,'Quân 5'),(40,'Bánh Mì Thịt Bò Nướng',17000,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pharetra sit amet aliquam id diam maecenas.','http://localhost:8080/RestaurantManager/api/fooditems/image/2f505def-f1e9-41b0-9db3-22d6d5c2d7ac.jpg',10,2,1,'ho-chi-minh','food','58/11 Nguyễn Văn Săng, P. Tân Sơn Nhì, Tân Phú, TP. HCM',NULL,NULL,1,NULL,'Quân 5'),(41,'Cơm Gà Xối Mỡ',56000,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pharetra sit amet aliquam id diam maecenas.','http://localhost:8080/RestaurantManager/api/fooditems/image/2e0105f6-a81b-4e5f-ad6c-5081e1141381.jpeg',10,4,1,'ho-chi-minh','drink','58/11 Nguyễn Văn Săng, P. Tân Sơn Nhì, Tân Phú, TP. HCM',NULL,NULL,1,NULL,'Quân 5'),(42,'Tré Trộn Cóc ',34000,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pharetra sit amet aliquam id diam maecenas.','http://localhost:8080/RestaurantManager/api/fooditems/image/2a61c43c-f13f-4bc6-94e8-10ae0b181c00.jpg',10,4,1,'ho-chi-minh','drink','58/11 Nguyễn Văn Săng, P. Tân Sơn Nhì, Tân Phú, TP. HCM',NULL,NULL,1,NULL,'Quân 5');
+INSERT INTO `fooditem` VALUES (34,'Bún Thái Cay',14500,'Delicious cheeseburger with juicy beef patty','http://localhost:8080/RestaurantManager/api/fooditems/image/056b3b35-8035-40e1-8180-8f18ea4614fb_bunthai.jpeg',10,4,1,'ha-noi','drink',NULL,NULL,NULL,1,0,NULL),(36,'Cơm Gà',19000,'Delicious cheeseburger with juicy beef patty','http://localhost:8080/RestaurantManager/api/fooditems/image/6a615883-25a0-4e58-b938-85251336d149_comga.jpeg',10,3,1,'ha-noi','drink',NULL,NULL,NULL,1,0,NULL),(37,'Pizza',12300,'Delicious cheeseburger with juicy beef patty','http://localhost:8080/RestaurantManager/api/fooditems/image/c5e23c85-9455-4250-a4d4-21eed36dfe21_piza.jpeg',10,2,1,'ha-noi','drink',NULL,NULL,NULL,1,0,NULL),(38,'Cơm Chiên & Nui Xào',17300,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.','http://localhost:8080/RestaurantManager/api/fooditems/image/d1d32ba2-f938-453f-9c2b-597ac0cc42ea_conchien.jpeg',10,2,1,'ho-chi-minh','food','58/11 Nguyễn Văn Săng, P. Tân Sơn Nhì, Tân Phú, TP. HCM',NULL,NULL,1,0,'Quân 5'),(39,'Cơm Tấm',12000,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ultricies integer quis auctor elit sed vulputate mi.','http://localhost:8080/RestaurantManager/api/fooditems/image/c9c05228-be9c-46d0-b631-d714fe8934b3_comtam.jpg',10,2,1,'ho-chi-minh','food','58/11 Nguyễn Văn Săng, P. Tân Sơn Nhì, Tân Phú, TP. HCM',NULL,NULL,1,0,'Quân 5'),(40,'Bánh Mì Thịt Bò Nướng',17000,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pharetra sit amet aliquam id diam maecenas.','http://localhost:8080/RestaurantManager/api/fooditems/image/2f505def-f1e9-41b0-9db3-22d6d5c2d7ac.jpg',10,2,1,'ho-chi-minh','food','58/11 Nguyễn Văn Săng, P. Tân Sơn Nhì, Tân Phú, TP. HCM',NULL,NULL,1,0,'Quân 5'),(41,'Cơm Gà Xối Mỡ',56000,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pharetra sit amet aliquam id diam maecenas.','http://localhost:8080/RestaurantManager/api/fooditems/image/2e0105f6-a81b-4e5f-ad6c-5081e1141381.jpeg',10,4,1,'ho-chi-minh','drink','58/11 Nguyễn Văn Săng, P. Tân Sơn Nhì, Tân Phú, TP. HCM',NULL,NULL,1,0,'Quân 5'),(42,'Tré Trộn Cóc ',34000,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pharetra sit amet aliquam id diam maecenas.','http://localhost:8080/RestaurantManager/api/fooditems/image/2a61c43c-f13f-4bc6-94e8-10ae0b181c00.jpg',10,4,1,'ho-chi-minh','drink','58/11 Nguyễn Văn Săng, P. Tân Sơn Nhì, Tân Phú, TP. HCM',NULL,NULL,1,0,'Quân 5');
 /*!40000 ALTER TABLE `fooditem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -294,4 +328,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-06 23:03:22
+-- Dump completed on 2023-09-07 23:01:14

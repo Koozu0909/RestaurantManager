@@ -87,9 +87,10 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
         // Disable crsf cho đường dẫn /rest/**
         http.csrf().ignoringAntMatchers("/api/**");
         http.authorizeRequests().antMatchers("/api/login/").permitAll();
-        http.authorizeRequests().antMatchers("/api/fooditems/").permitAll();
-        http.authorizeRequests().antMatchers("/api/categories/").permitAll();
-        http.authorizeRequests().antMatchers("/api/user/").permitAll();
+        http.authorizeRequests().antMatchers("/api/fooditems").permitAll();       
+        http.authorizeRequests().antMatchers("/api/comment").permitAll();
+        http.authorizeRequests().antMatchers("/api/categories").permitAll();
+        http.authorizeRequests().antMatchers("/api/user").permitAll();
         http.antMatcher("/api/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")

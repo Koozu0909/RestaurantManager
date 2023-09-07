@@ -35,7 +35,7 @@ public class FoodItem implements Serializable {
     private String name;
 
     @Column(name = "Price")
-    private double price;
+    private Double  price;
 
     @Column(name = "Description", columnDefinition = "TEXT") // Thay đổi kiểu dữ liệu thành TEXT
     private String description;
@@ -59,7 +59,8 @@ public class FoodItem implements Serializable {
     private Time closeTime;
     
     @Column(name = "Rate")
-    private Time rate;
+    private Double  rate;
+
     
     @Column(name = "LocationFood")
     private String locationFood;
@@ -125,6 +126,13 @@ public class FoodItem implements Serializable {
         this.active = active;
     }
 
+    public double getRate() {
+        return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
+    }
     public String getImageURL() {
         return imageURL;
     }
@@ -165,13 +173,7 @@ public class FoodItem implements Serializable {
         this.closeTime = closeTime;
     }
 
-    public Time getRate() {
-        return rate;
-    }
 
-    public void setRate(Time rate) {
-        this.rate = rate;
-    }
 
     public String getLocationFood() {
         return locationFood;
